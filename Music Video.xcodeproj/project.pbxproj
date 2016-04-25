@@ -14,6 +14,7 @@
 		793DC8971CC48ACD0041F09D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 793DC8951CC48ACD0041F09D /* LaunchScreen.storyboard */; };
 		793DC8A21CC48ACD0041F09D /* Music_VideoTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DC8A11CC48ACD0041F09D /* Music_VideoTests.swift */; };
 		793DC8AD1CC48ACD0041F09D /* Music_VideoUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 793DC8AC1CC48ACD0041F09D /* Music_VideoUITests.swift */; };
+		799CE1401CCDC65600D1FF0D /* APIManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 799CE13F1CCDC65600D1FF0D /* APIManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		793DC8A81CC48ACD0041F09D /* Music VideoUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Music VideoUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		793DC8AC1CC48ACD0041F09D /* Music_VideoUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Music_VideoUITests.swift; sourceTree = "<group>"; };
 		793DC8AE1CC48ACD0041F09D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		799CE13F1CCDC65600D1FF0D /* APIManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = APIManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +128,7 @@
 		793DC8BA1CC48CA60041F09D /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				799CE13F1CCDC65600D1FF0D /* APIManager.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -288,6 +291,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				799CE1401CCDC65600D1FF0D /* APIManager.swift in Sources */,
 				793DC88F1CC48ACD0041F09D /* ViewController.swift in Sources */,
 				793DC88D1CC48ACD0041F09D /* AppDelegate.swift in Sources */,
 			);
@@ -516,6 +520,7 @@
 				793DC8B31CC48ACD0041F09D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		793DC8B41CC48ACD0041F09D /* Build configuration list for PBXNativeTarget "Music VideoTests" */ = {
 			isa = XCConfigurationList;
@@ -524,6 +529,7 @@
 				793DC8B61CC48ACD0041F09D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		793DC8B71CC48ACD0041F09D /* Build configuration list for PBXNativeTarget "Music VideoUITests" */ = {
 			isa = XCConfigurationList;
@@ -532,6 +538,7 @@
 				793DC8B91CC48ACD0041F09D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
