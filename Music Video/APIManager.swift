@@ -45,7 +45,7 @@ class APIManager {
                 {
                         //If it executed properly such that the as? was able to get a String:AnyObject
                     if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-                        as? [String: AnyObject]
+                        as? JSONDictionary
                     {
                         
                         print(json)
