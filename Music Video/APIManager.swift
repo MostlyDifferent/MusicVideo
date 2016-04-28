@@ -19,27 +19,61 @@ class APIManager {
             //get our singleton, with specified configuration
         let session = NSURLSession(configuration: config)
         
-            //get the singleton
-//        let session = NSURLSession.sharedSession()
+   //        let session = NSURLSession.sharedSession()
         let url = NSURL(string: urlString)!
         
             //task that goes out and gets the url.
             //Starts in a passive state.
-        let task = session.dataTaskWithURL(url){
-            (data, response, error) -> Void in
+        let task = session.dataTaskWithURL(url)
+        {(data, response, error) -> Void in
             
                 //Move it into the main queue
-            dispatch_async(dispatch_get_main_queue()) {
-                if error != nil {
-                    completion(result: (error!.localizedDescription))
-                } else {
-                    completion(result: "NSURLSession successful")
-                    print(data)
-                        
+            if error != nil
+            {
+                dispatch_async(dispatch_get_main_queue())
+                {
+                        completion(result: (error!.localizedDescription))
                 }
                 
             }
-        }
+            else
+            {
+                //JSON Serialization
+                //print(data)
+                
+                do
+                {
+                        //If it executed properly such that the as? was able to get a String:AnyObject
+                    if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
+                        as? [String: AnyObject]
+                    {
+                        
+                        print(json)
+                        
+                        let priority = DISPATCH_QUEUE_PRIORITY_HIGH
+                            //Dispatch this block to a concurrent queue
+                        dispatch_async(dispatch_get_global_queue(priority, 0))
+                        {
+                            dispatch_async(dispatch_get_main_queue())
+                            {
+                                completion(result: "JSONSerialization Successful")
+                            }
+                        }
+                    }
+                }
+                    //Catch any problems in JSONObjectWithData()
+                catch
+                {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        completion(result: "error in NSJSONSerialization")
+                    }
+                }
+                
+            }//if error != nil else
+                
+        } //End of task block definition
+        
+            //Actually make the task happen.
         task.resume()
     }
     
