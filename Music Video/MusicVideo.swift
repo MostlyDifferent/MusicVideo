@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Videos{
+class Video{
     
     private var _vName:String
     private var _vRights:String

@@ -10,7 +10,8 @@ import Foundation
 
 class APIManager {
     
-    func loadData(urlString:String, completion: (result:String) -> Void) {
+        //Completion takes an argument of [Video] and returns void
+    func loadData(urlString:String, completion: [Video] -> Void) {
         
             //no caching
         
@@ -30,11 +31,7 @@ class APIManager {
                 //Move it into the main queue
             if error != nil
             {
-                dispatch_async(dispatch_get_main_queue())
-                {
-                        completion(result: (error!.localizedDescription))
-                }
-                
+                print(error!.localizedDescription)
             }
             else
             {
@@ -45,10 +42,22 @@ class APIManager {
                 {
                         //If it executed properly such that the as? was able to get a String:AnyObject
                     if let json = try NSJSONSerialization.JSONObjectWithData(data!, options: .AllowFragments)
-                        as? JSONDictionary
+                            as? JSONDictionary,
+                        feed = json["feed"] as? JSONDictionary,
+                        entries = feed["entry"] as? JSONArray
                     {
                         
-                        print(json)
+                        var videos = [Video]()
+                        for entry in entries
+                        {
+                            let entry = Video(data: entry as! JSONDictionary)
+                            videos.append(entry)
+                        }
+                        
+                        let i = videos.count
+                        print("iTunesApiManager - total count --> \(i)")
+                        print(" ")
+                        
                         
                         let priority = DISPATCH_QUEUE_PRIORITY_HIGH
                             //Dispatch this block to a concurrent queue
@@ -56,7 +65,7 @@ class APIManager {
                         {
                             dispatch_async(dispatch_get_main_queue())
                             {
-                                completion(result: "JSONSerialization Successful")
+                                completion(videos)
                             }
                         }
                     }
@@ -64,9 +73,7 @@ class APIManager {
                     //Catch any problems in JSONObjectWithData()
                 catch
                 {
-                    dispatch_async(dispatch_get_main_queue()) {
-                        completion(result: "error in NSJSONSerialization")
-                    }
+                    print("error in NSJSONSerialization")
                 }
                 
             }//if error != nil else

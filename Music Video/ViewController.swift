@@ -8,9 +8,14 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UIViewController
+{
 
-    override func viewDidLoad() {
+    var vVideos = [Video]()
+    
+    
+    override func viewDidLoad()
+    {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
     
@@ -25,20 +30,22 @@ class ViewController: UIViewController {
         
     }
     
-    func didLoadData(result:String) {
-        let alert = UIAlertController(title: (result), message: nil, preferredStyle: .Alert)
+    func didLoadData(videos: [Video])
+    {
+        vVideos = videos
         
-        let okAction = UIAlertAction(title: "OK", style: .Default) { action -> Void in
-            
+        for item in videos
+        {
+            print("name = \(item.vName)")
         }
         
-        alert.addAction(okAction)
-        self.presentViewController(alert, animated: true, completion: nil)
+        for(index, item) in videos.enumerate()
+        {
+            print("\(index) name = \(item.vName)")
+        }
         
-        print(result)
-        
-        //print(result)
     }
+
 
 }
 
