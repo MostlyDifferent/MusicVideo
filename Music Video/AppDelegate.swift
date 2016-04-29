@@ -8,18 +8,47 @@
 
 import UIKit
 
+var gReachability: Reachability?
+
+var gReachabilityStatus = WIFI
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    
+    var internetCheck: Reachability?
+    
 
-
-    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-       
-        //disable caching
-      //  NSURLCache.setSharedURLCache(NSURLCache(memoryCapacity: 0, diskCapacity: 0, diskPath: nil))
+    func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
+    {
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "reachabilityChanged:", name: kReachabilityChangedNotification, object: nil)
+        
+        internetCheck = Reachability.reachabilityForInternetConnection()
+        internetCheck?.startNotifier()
         
         return true
+    }
+    
+    func reachabilityChanged(notification: NSNotification)
+    {
+        gReachability = notification.object as? Reachability
+        statusChangedWithReachability(gReachability!)
+    }
+    
+    func statusChangedWithReachability(currentReachabilityStatus: Reachability)
+    {
+        let networkStatus: NetworkStatus = currentReachabilityStatus.currentReachabilityStatus()
+        
+        switch networkStatus.rawValue
+        {
+            case NotReachable.rawValue : gReachabilityStatus = NOACCESS
+            case ReachableViaWiFi.rawValue : gReachabilityStatus = WIFI
+            case ReachableViaWWAN.rawValue : gReachabilityStatus = WWAN
+            default: return
+        }
+        
+        NSNotificationCenter.defaultCenter().postNotificationName("ReachStatusChanged",object: nil)
     }
 
     func applicationWillResignActive(application: UIApplication) {
@@ -40,8 +69,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
     }
 
-    func applicationWillTerminate(application: UIApplication) {
-        // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+    func applicationWillTerminate(application: UIApplication)
+    {
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: kReachabilityChangedNotification, object: nil)
+        
     }
 
 
