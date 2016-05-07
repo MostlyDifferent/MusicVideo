@@ -10,30 +10,22 @@ import UIKit
 
 class MusicVideoTVC: UITableViewController {
     
-    var vVideos = [Video]()
+    var fVideos = [Video]()
     
     override func viewDidLoad()
     {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.mReachabilityStatusChanged), name: "ReachStatusChanged", object: nil)
-        
+
+            //Run the status checker once to get the initial status
         mReachabilityStatusChanged()
-        
-        let api = APIManager()
-        api.mLoadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=50/json", completion: mDidLoadData)
-        //        api.loadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=10/json"){
-        //            (result:String) in
-        //            print(result)
-        //        }
-        
-        
+
     }
     
     func mDidLoadData(videos: [Video])
     {
-        vVideos = videos
+        fVideos = videos
         
         for item in videos
         {
@@ -55,13 +47,63 @@ class MusicVideoTVC: UITableViewController {
         {
         case NOACCESS :
             view.backgroundColor = UIColor.redColor()
-        case WIFI :
+            
+            dispatch_async(dispatch_get_main_queue())
+            {
+            
+                let alert = UIAlertController(title: "No Internet Access", message: "Please make sure you are connected to the Internets.", preferredStyle: .Alert)
+    
+                let cancelAction = UIAlertAction(title: "Cancel", style: .Default)
+                { action -> () in
+                
+                    print("Cancel")
+                
+                }
+            
+                    //Destructive makes it show up in red
+                let deleteAction = UIAlertAction(title: "Delete", style: .Destructive)
+                { action -> () in
+                
+                    print("...Followed By Delete")
+                
+                }
+        
+                let okAction = UIAlertAction(title: "OK", style: .Default)
+                { action -> Void in
+                
+                    print("Ok")
+                
+                }
+        
+                alert.addAction(okAction)
+                alert.addAction(cancelAction)
+                alert.addAction(deleteAction)
+            
+                self.presentViewController(alert, animated: true, completion: nil)
+            
+            }
+         default:
             view.backgroundColor = UIColor.greenColor()
-        case WWAN :
-            view.backgroundColor = UIColor.yellowColor()
-        default:
-            return
+            
+                //If we have already loaded the videos, don't reload.
+                //We might want to do that otherwise on demand, but not just because network status changed.
+            if fVideos.count > 0
+            {
+                print("do not refresh API")
+            }
+            else
+            {
+                mRunAPI()
+            }
         }
+    }
+    
+    func mRunAPI()
+    {
+        
+        let api = APIManager()
+        api.mLoadData("https://itunes.apple.com/us/rss/topmusicvideos/limit=50/json", completion: mDidLoadData)
+       
     }
     
     deinit
@@ -83,7 +125,7 @@ class MusicVideoTVC: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
         // #warning Incomplete implementation, return the number of rows
-        return vVideos.count
+        return fVideos.count
     }
 
     
@@ -91,7 +133,7 @@ class MusicVideoTVC: UITableViewController {
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("uiTableCell", forIndexPath: indexPath)
         
-        let video = vVideos[indexPath.row]
+        let video = fVideos[indexPath.row]
         
         cell.textLabel?.text = ("\(indexPath.row + 1)")
         cell.detailTextLabel?.text = video.vName
