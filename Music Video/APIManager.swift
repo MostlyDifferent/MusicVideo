@@ -20,7 +20,6 @@ class APIManager {
             //get our singleton, with specified configuration
         let session = NSURLSession(configuration: config)
         
-   //        let session = NSURLSession.sharedSession()
         let url = NSURL(string: urlString)!
         
             //task that goes out and gets the url.
@@ -36,7 +35,6 @@ class APIManager {
             else
             {
                 //JSON Serialization
-                //print(data)
                 
                 do
                 {

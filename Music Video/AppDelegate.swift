@@ -10,7 +10,7 @@ import UIKit
 
 var gReachability: Reachability?
 
-var gReachabilityStatus = WIFI
+var gReachabilityStatus = " "
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,9 +23,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.reachabilityChanged(_:)), name: kReachabilityChangedNotification, object: nil)
-        
+         
         vInternetCheck = Reachability.reachabilityForInternetConnection()
         vInternetCheck?.startNotifier()
+        statusChangedWithReachability(vInternetCheck!)
         
         return true
     }
