@@ -11,7 +11,7 @@ import Foundation
 class APIManager {
     
         //Completion takes an argument of [Video] and returns void
-    func loadData(urlString:String, completion: [Video] -> Void) {
+    func mLoadData(urlString:String, completion: [Video] -> Void) {
         
             //no caching
         
