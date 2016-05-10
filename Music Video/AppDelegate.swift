@@ -17,35 +17,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
     
-    var vInternetCheck: Reachability?
+    var fInternetCheck: Reachability?
     
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool
     {
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.reachabilityChanged(_:)), name: kReachabilityChangedNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(AppDelegate.mReachabilityChanged(_:)), name: kReachabilityChangedNotification, object: nil)
          
-        vInternetCheck = Reachability.reachabilityForInternetConnection()
-        vInternetCheck?.startNotifier()
-        statusChangedWithReachability(vInternetCheck!)
+        fInternetCheck = Reachability.reachabilityForInternetConnection()
+        fInternetCheck?.startNotifier()
+        mStatusChangedWithReachability(fInternetCheck!)
         
         return true
     }
     
-    func reachabilityChanged(notification: NSNotification)
+    func mReachabilityChanged(notification: NSNotification)
     {
         gReachability = notification.object as? Reachability
-        statusChangedWithReachability(gReachability!)
+        mStatusChangedWithReachability(gReachability!)
     }
     
-    func statusChangedWithReachability(currentReachabilityStatus: Reachability)
+    func mStatusChangedWithReachability(currentReachabilityStatus: Reachability)
     {
         let networkStatus: NetworkStatus = currentReachabilityStatus.currentReachabilityStatus()
         
         switch networkStatus.rawValue
         {
-            case NotReachable.rawValue : gReachabilityStatus = NOACCESS
-            case ReachableViaWiFi.rawValue : gReachabilityStatus = WIFI
-            case ReachableViaWWAN.rawValue : gReachabilityStatus = WWAN
+            case NotReachable.rawValue : gReachabilityStatus = kReachNoAccess
+            case ReachableViaWiFi.rawValue : gReachabilityStatus = kReachWiFi
+            case ReachableViaWWAN.rawValue : gReachabilityStatus = kReachWWAN
             default: return
         }
         

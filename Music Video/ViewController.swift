@@ -11,7 +11,7 @@ import UIKit
 class ViewController: UIViewController, UITableViewDataSource, UITableViewDelegate
 {
 
-    var vVideos = [Video]()
+    var fVideos = [Video]()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var displayLabel: UILabel!
@@ -40,16 +40,16 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func mDidLoadData(videos: [Video])
     {
-        vVideos = videos
+        fVideos = videos
         
         for item in videos
         {
-            print("name = \(item.vName)")
+            print("name = \(item.fName)")
         }
         
         for(index, item) in videos.enumerate()
         {
-            print("\(index) name = \(item.vName)")
+            print("\(index) name = \(item.fName)")
         }
         
         tableView.reloadData()
@@ -60,13 +60,13 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     {
         switch gReachabilityStatus
         {
-            case NOACCESS :
+            case kReachNoAccess :
                 view.backgroundColor = UIColor.redColor()
                 displayLabel.text = "No Internet"
-            case WIFI :
+            case kReachWiFi :
                 view.backgroundColor = UIColor.greenColor()
                 displayLabel.text = "Reachable with WIFI"
-            case WWAN :
+            case kReachWWAN :
                 view.backgroundColor = UIColor.yellowColor()
                 displayLabel.text = "Reachable with Cellular"
             default:
@@ -84,17 +84,17 @@ class ViewController: UIViewController, UITableViewDataSource, UITableViewDelega
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int
     {
-        return vVideos.count
+        return fVideos.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell
     {
         let cell = tableView.dequeueReusableCellWithIdentifier("uiTableCell", forIndexPath: indexPath)
 
-        let video = vVideos[indexPath.row]
+        let video = fVideos[indexPath.row]
 
         cell.textLabel?.text = ("\(indexPath.row + 1)")
-        cell.detailTextLabel?.text = video.vName
+        cell.detailTextLabel?.text = video.fName
         
         return cell
     }

@@ -10,61 +10,63 @@ import Foundation
 
 class Video{
     
-    private var _vName:String
-    private var _vRights:String
-    private var _vPrice:String
-    private var _vImageUrl:String
-    private var _vArtist:String
-    private var _vVideoUrl:String
-    private var _vImid:String
-    private var _vGenre:String
-    private var _vLinkToiTunes:String
-    private var _vReleaseDate:String
+    var fRank = 0
+    
+    private var _fName:String
+    private var _fRights:String
+    private var _fPrice:String
+    private var _fImageUrl:String
+    private var _fArtist:String
+    private var _fVideoUrl:String
+    private var _fImid:String
+    private var _fGenre:String
+    private var _fLinkToiTunes:String
+    private var _fReleaseDate:String
     
     
-    var vImageData:NSData?
+    var fImageData:NSData?
     
     
         //Getters
     
-    var vName: String {
-        return _vName
+    var fName: String {
+        return _fName
     }
     
-    var vRights: String {
-        return _vRights
+    var fRights: String {
+        return _fRights
     }
     
-    var vPrice: String {
-        return _vPrice
+    var fPrice: String {
+        return _fPrice
     }
     
-    var vImageUrl: String{
-        return _vImageUrl
+    var fImageUrl: String{
+        return _fImageUrl
     }
     
-    var vArtist: String {
-        return _vArtist
+    var fArtist: String {
+        return _fArtist
     }
     
-    var vVideoUrl: String{
-        return _vVideoUrl
+    var fVideoUrl: String{
+        return _fVideoUrl
     }
     
-    var vImid: String {
-        return _vImid
+    var fImid: String {
+        return _fImid
     }
     
-    var vGenre: String {
-        return _vGenre
+    var fGenre: String {
+        return _fGenre
     }
     
-    var vLinkToiTunes: String {
-        return _vLinkToiTunes
+    var fLinkToiTunes: String {
+        return _fLinkToiTunes
     }
     
-    var vReleaseDate: String {
-        return _vReleaseDate
+    var fReleaseDate: String {
+        return _fReleaseDate
     }
     
     
@@ -85,11 +87,11 @@ class Video{
         if let name = data["im:name"] as? JSONDictionary,
             nameLabel = name["label"] as? String
         {
-            _vName = nameLabel
+            _fName = nameLabel
         }
         else
         {
-            _vName = ""
+            _fName = ""
         }
         
             //Rights
@@ -97,11 +99,11 @@ class Video{
         if let rights = data["rights"] as? JSONDictionary,
             rightsLabel = rights["label"] as? String
         {
-            _vRights = rightsLabel
+            _fRights = rightsLabel
         }
         else
         {
-            _vRights = ""
+            _fRights = ""
         }
         
         
@@ -110,11 +112,11 @@ class Video{
         if let price = data["im:price"] as? JSONDictionary,
             priceLabel = price["label"] as? String
         {
-            _vPrice = priceLabel
+            _fPrice = priceLabel
         }
         else
         {
-            _vPrice = ""
+            _fPrice = ""
         }
         
         
@@ -125,11 +127,11 @@ class Video{
             imageAt2 = img[2] as? JSONDictionary,
             imageURL = imageAt2["label"] as? String
         {
-            _vImageUrl = imageURL.stringByReplacingOccurrencesOfString("100x100", withString: "600x600")
+            _fImageUrl = imageURL.stringByReplacingOccurrencesOfString("100x100", withString: "600x600")
         }
         else
         {
-            _vImageUrl = ""
+            _fImageUrl = ""
         }
         
         
@@ -138,11 +140,11 @@ class Video{
         if let artist = data["im:artist"] as? JSONDictionary,
             artistLabel = artist["Label"] as? String
         {
-            _vArtist = artistLabel
+            _fArtist = artistLabel
         }
         else
         {
-            _vArtist = ""
+            _fArtist = ""
         }
         
         
@@ -153,11 +155,11 @@ class Video{
             videoAttributes = videoAt1["attributes"] as? JSONDictionary,
             videoURL = videoAttributes["href"] as? String
         {
-            _vVideoUrl = videoURL
+            _fVideoUrl = videoURL
         }
         else
         {
-            _vVideoUrl = ""
+            _fVideoUrl = ""
         }
         
         
@@ -166,11 +168,11 @@ class Video{
             idAttributes = vidId["Attributes"] as? JSONDictionary,
             imid = idAttributes["im:id"] as? String
         {
-            _vImid = imid
+            _fImid = imid
         }
         else
         {
-            _vImid = ""
+            _fImid = ""
         }
         
         
@@ -180,11 +182,11 @@ class Video{
             catAttributes = categ["attributes"] as? JSONDictionary,
             catTerm = catAttributes["term"] as? String
         {
-           _vGenre = catTerm
+            _fGenre = catTerm
         }
         else
         {
-            _vGenre = ""
+            _fGenre = ""
         }
         
             //Link to iTunes
@@ -192,11 +194,11 @@ class Video{
         if let linkId = data["id"] as? JSONDictionary,
             linkLabel = linkId["label"] as? String
         {
-            _vLinkToiTunes = linkLabel
+            _fLinkToiTunes = linkLabel
         }
         else
         {
-            _vLinkToiTunes = ""
+            _fLinkToiTunes = ""
         }
         
         
@@ -205,11 +207,11 @@ class Video{
             relAttr = relDate["attributes"] as? JSONDictionary,
             relLabel = relAttr["label"] as? String
         {
-            _vReleaseDate = relLabel
+            _fReleaseDate = relLabel
         }
         else
         {
-            _vReleaseDate = ""
+            _fReleaseDate = ""
         }
         
     }
