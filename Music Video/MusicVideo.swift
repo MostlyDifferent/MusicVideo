@@ -138,7 +138,7 @@ class Video{
             //Artist
         
         if let artist = data["im:artist"] as? JSONDictionary,
-            artistLabel = artist["Label"] as? String
+            artistLabel = artist["label"] as? String
         {
             _fArtist = artistLabel
         }
@@ -165,7 +165,7 @@ class Video{
         
             //Imid
         if let vidId = data["id"] as? JSONDictionary,
-            idAttributes = vidId["Attributes"] as? JSONDictionary,
+            idAttributes = vidId["attributes"] as? JSONDictionary,
             imid = idAttributes["im:id"] as? String
         {
             _fImid = imid
@@ -203,7 +203,7 @@ class Video{
         
         
             //Release Date
-        if let relDate = data["im:releasedate"] as? JSONDictionary,
+        if let relDate = data["im:releaseDate"] as? JSONDictionary,
             relAttr = relDate["attributes"] as? JSONDictionary,
             relLabel = relAttr["label"] as? String
         {
