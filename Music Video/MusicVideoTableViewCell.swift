@@ -40,6 +40,7 @@ class MusicVideoTableViewCell: UITableViewCell
         else
         {
                 //Get the image into the video, and put it into the UI image.
+            print("Get images in background thread")
             mGetVideoImage(fVideo!, imageView: uiMusicImage)
         }
         
