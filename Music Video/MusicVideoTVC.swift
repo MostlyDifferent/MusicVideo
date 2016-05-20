@@ -21,11 +21,17 @@ class MusicVideoTVC: UITableViewController {
     {
         super.viewDidLoad()
         
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(ViewController.mReachabilityStatusChanged), name: "ReachStatusChanged", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVC.mReachabilityStatusChanged), name: "ReachStatusChanged", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(MusicVideoTVC.mPreferredFontChanged), name: UIContentSizeCategoryDidChangeNotification, object: nil)
 
             //Run the status checker once to get the initial status
         mReachabilityStatusChanged()
 
+    }
+    
+    func mPreferredFontChanged()
+    {
+        print("Preferred font changed")
     }
     
     func mDidLoadData(videos: [Video])
@@ -114,6 +120,7 @@ class MusicVideoTVC: UITableViewController {
     deinit
     {
         NSNotificationCenter.defaultCenter().removeObserver(self, name: "ReachStatusChanged", object: nil)
+        NSNotificationCenter.defaultCenter().removeObserver(self, name: UIContentSizeCategoryDidChangeNotification, object: nil)
     }
     
     

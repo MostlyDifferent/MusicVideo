@@ -8,6 +8,112 @@
 
 import Foundation
 
+
+class JSONParser
+{
+    private var _fData: AnyObject?
+    
+    init(data: AnyObject)
+    {
+        _fData = data
+    }
+    
+    func mDig(args: AnyObject?...) -> AnyObject?
+    {
+        var currentSpot: AnyObject? = _fData
+        
+        for arg in args
+        {
+            if let strArg = arg as? String,
+                dict = currentSpot as? JSONDictionary
+            {
+                currentSpot = dict[strArg]
+            }
+            else if let intArg = arg as? Int,
+                array = currentSpot as? JSONArray
+            {
+                if intArg < array.count && intArg >= 0
+                {
+                    currentSpot = array[intArg]
+                }
+                else
+                {
+                    print("Digging past array bounds")
+                    return nil
+                }
+            }
+            else
+            {
+                print("Dig failed mid-dig")
+                return nil
+            }
+            
+        }
+        
+        return currentSpot
+    }
+    
+    func mDigString(args: AnyObject...) -> String
+    {
+        if let str = mDig(args) as? String
+        {
+            return str
+        }
+        else
+        {
+            print("Dig returned something that's not a string")
+            return ""
+        }
+    }
+    
+    func mDigForString(args:AnyObject...) -> String
+    {
+        var currentSpot: AnyObject? = _fData
+        
+        for arg in args
+        {
+            if let strArg = arg as? String,
+                dict = currentSpot as? JSONDictionary
+            {
+                print("Got String Arg")
+                currentSpot = dict[strArg]
+            }
+            else if let intArg = arg as? Int,
+                array = currentSpot as? JSONArray
+            {
+                print("Got array arg")
+                if intArg < array.count && intArg >= 0
+                {
+                    currentSpot = array[intArg]
+                }
+                else
+                {
+                    print("Digging past array bounds")
+                    return ""
+                }
+            }
+            else
+            {
+                print("Dig failed mid-dig")
+                return ""
+            }
+            
+        }
+        
+        if let stringResult = currentSpot as? String
+        {
+            return stringResult
+        }
+        
+        
+        return ""
+    }
+    
+}
+
+
+
+
 class Video{
     
     var fRank = 0
@@ -78,12 +184,16 @@ class Video{
     
     init(data: JSONDictionary)
     {
+        let parser = JSONParser(data: data)
+        
+        _fName = parser.mDigForString("im:name", "label")
+        _fImageUrl = parser.mDigForString("im:image", 2, "label")
         
             //If we don't init all properties we get an error message
             //Return from initializer without initializing all stored properties
         
             //video name
-        
+      /*
         if let name = data["im:name"] as? JSONDictionary,
             nameLabel = name["label"] as? String
         {
@@ -93,7 +203,7 @@ class Video{
         {
             _fName = ""
         }
-        
+        */
             //Rights
         
         if let rights = data["rights"] as? JSONDictionary,
@@ -119,7 +229,7 @@ class Video{
             _fPrice = ""
         }
         
-        
+    /*
         
             //video image url
         
@@ -133,7 +243,7 @@ class Video{
         {
             _fImageUrl = ""
         }
-        
+        */
         
             //Artist
         
